@@ -42,7 +42,7 @@ Then do:
 
 ### Bug 1 - Environment variables (and possibly other container settings) not being applied to batch job container when job is submited directly
 
-Submit a batch job via the CLI:
+Submit a batch job:
 
 ```
 awslocal batch submit-job --job-name test-1 --job-queue test-function-job-queue --job-definition test-function --container-overrides='environment=[{name=test-variable,value=test-value}]'
@@ -51,7 +51,7 @@ awslocal batch submit-job --job-name test-1 --job-queue test-function-job-queue 
 Then using the returned *jobId* look at the job details:
 
 ```
-aws batch describe-jobs --jobs <Job ID>
+awslocal batch describe-jobs --jobs <Job ID>
 ```
 
 **Notice that the environment variables are not present in the returned JSON information.**
@@ -71,7 +71,7 @@ Find out the *JobId* of the job that was submited as part of the step function s
 Then using the returned *jobId* look at the job details:
 
 ```
-aws batch describe-jobs --jobs <Job ID>
+awslocal batch describe-jobs --jobs <Job ID>
 ```
 
 **Similar to *Bug 1* the environment variables are not present in the returned JSON information.**
