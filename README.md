@@ -8,6 +8,8 @@ All the commands below are run from the root of this git repository.
 
 The *awslocal* CLI tool is required.
 
+A docker compose YAML file (called *docker-compose.yml*) is included for running LocalStack.
+
 ## Step 1 - Build the test container
 
 ---

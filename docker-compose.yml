@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    restart: unless-stopped
+    container_name: localstack
+    network_mode: bridge
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEFAULT_REGION=us-east-1
+      - HOSTNAME_FROM_LAMBDA=localhost
+      - LAMBDA_DOCKER_NETWORK=host
+      - LAMBDA_EXECUTOR=docker-reuse
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}
+      - MAIN_CONTAINER_NAME=localstack
+      - SERVICES=cloudformation,lambda,s3,stepfunctions,serverless,ssm,batch,ec2,ecr,ecs,events
+      - DEBUG=1
+    ports:
+      - "4566:4566"
+      - "4510:4510"
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
