@@ -1,0 +1,18 @@
+{
+    "StartAt": "TestBatch",
+    "States": {
+        "TestBatch": {
+        "Type": "Task",
+        "Resource": "arn:aws:states:::batch:submitJob.sync",
+        "Parameters": {
+            "JobDefinition": "arn:aws:batch:us-east-1:000000000000:job-definition/test-function:1",
+            "JobName": "test-job",
+            "JobQueue": "arn:aws:batch:us-east-1:000000000000:job-queue/test-function-job-queue",
+            "ContainerOverrides": {
+                "Environment.$": "$.Environment"
+            }
+        },
+        "End": true
+        }
+    }
+}

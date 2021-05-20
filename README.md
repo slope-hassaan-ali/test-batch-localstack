@@ -44,6 +44,8 @@ Then do:
 
 ### Bug 1 - Environment variables (and possibly other container settings) not being applied to batch job container when job is submited directly
 
+**Note: The JSON for the step function used here is located in** ***state-machine.json***
+
 Submit a batch job:
 
 ```
@@ -62,6 +64,8 @@ awslocal batch describe-jobs --jobs <Job ID>
 
 ### Bug 2 - Environment variables (and possibly other container settings) not being applied to batch job container when job is submited via Step Functions
 
+**Note: The JSON for the step function used here is located in** ***state-machine.json***
+
 Start a step function execution:
 
 ```
@@ -77,3 +81,23 @@ awslocal batch describe-jobs --jobs <Job ID>
 ```
 
 **Similar to *Bug 1* the environment variables are not present in the returned JSON information.**
+
+---
+
+### Bug 3 - Setting the Batch Job container environment variables (and possibly other submit job parameters) dynamically via the input to the Step Function causes an error
+
+**Note: The JSON for the step function used here is located in** ***second-state-machine.json***
+
+**Note: DEBUG=1 is required to see the error.**
+
+Start a step function execution:
+
+```
+awslocal stepfunctions start-execution --state-machine-arn "arn:aws:states:us-east-1:000000000000:stateMachine:test-second-state-machine" --cli-binary-format raw-in-base64-out --input '{ "Environment": [ { "Name": "EnvironmentName", "Value": "test" }, { "Name": "TId", "Value": "1" }, { "Name": "CacheKey", "Value": "59442434-b604-46ca-80a2-d57e9cc57879" }, { "Name": "Id", "Value": "247294" }, { "Name": "UserId", "Value": "5029" }, { "Name": "RecordLimit", "Value": null } ] }'
+```
+
+Within a few seconds LocalStack will try to run the batch job within the step function but will fail and produce an error that looks similar to this:
+
+```
+ERROR:moto.batch.models: Failed to run AWS Batch container MOTO-BATCH-d2c7c9bd-b3f0-41bf-81a0-dbac5f954644. Error 'value'
+```

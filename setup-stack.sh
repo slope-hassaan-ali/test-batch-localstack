@@ -43,4 +43,9 @@ awslocal stepfunctions create-state-machine \
   --name "test-state-machine" \
   --role-arn "arn:aws:iam::000000000000:role/test-state-machine-role" \
   --definition "$state_machine_json_string"
-  
+
+second_state_machine_json_string="$(python -c 'import json, sys;print(json.dumps(json.load(sys.stdin)))' < second-state-machine.json)"
+awslocal stepfunctions create-state-machine \
+  --name "test-second-state-machine" \
+  --role-arn "arn:aws:iam::000000000000:role/test-state-machine-role" \
+  --definition "$second_state_machine_json_string"
