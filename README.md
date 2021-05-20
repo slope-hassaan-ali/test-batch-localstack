@@ -24,7 +24,7 @@ docker build -t localhost:4510/test-function .
 
 ---
 
-Startup LocalStack and then run the command within the file: *setup-stack.sh*
+Startup LocalStack and then run the commands within the file: *setup-stack.sh*
 
 Alternatively you can run the script directly by first making it an executable via:
 
